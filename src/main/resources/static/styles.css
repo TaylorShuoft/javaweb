@@ -1,0 +1,187 @@
+/* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    padding: 20px;
+    color: #fff;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.sidebar ul {
+    list-style: none;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: #ecf0f1;
+    text-decoration: none;
+    font-size: 1.1rem;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sidebar ul li a:hover {
+    background-color: #34495e;
+}
+
+/* 内容区域样式 */
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+.content h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* 题目列表样式 */
+.question-list {
+    margin-top: 20px;
+}
+
+.question-list h2 {
+    font-size: 1.5rem;
+    color: #34495e;
+    margin-bottom: 15px;
+}
+
+.question-list ul {
+    list-style: none;
+}
+
+.question-list ul li {
+    margin: 10px 0;
+}
+
+.question-list ul li a {
+    text-decoration: none;
+    color: #2980b9;
+    font-size: 1.1rem;
+    padding: 8px 12px;
+    display: block;
+    border-radius: 5px;
+    transition: all 0.3s;
+}
+
+.question-list ul li a:hover {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+/* 题目展示区样式 */
+.question-display {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.question-content h3 {
+    font-size: 1.3rem;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.question-content p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* 乘法口诀表样式 */
+.question-content pre {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #333;
+}
+
+/* 示例导航栏样式 */
+.example-nav {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.example-nav a {
+    text-decoration: none;
+    color: #fff;
+    background-color: #3498db;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.example-nav a:hover {
+    background-color: #2980b9;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        box-shadow: none;
+    }
+
+    .content {
+        padding: 20px;
+    }
+}
+/* 在 styles.css 中添加以下内容 */
+.question-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.question-content th, .question-content td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.question-content th {
+    background-color: #2c3e50;
+    color: #fff;
+}
+
+.question-content td {
+    background-color: #f9f9f9;
+}

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登陆验证</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: sans-serif;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: flex-start;
+            background-color: #f0f0f0;
+        }
+
+        .nav-bar a {
+            padding: 10px 20px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            background-color: green;
+            margin-right: 2px;
+        }
+
+        .nav-bar a.active {
+            background-color: red;
+        }
+
+        .content {
+            padding: 20px;
+            background-color: white;
+            min-height: 80vh;
+        }
+
+        .content p {
+            color: blue;
+            font-size: 16px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .content p.red {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .content form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .content form label {
+            font-weight: bold;
+            color: black;
+        }
+
+        .content form input[type="text"],
+        .content form input[type="password"] {
+            padding: 5px;
+            width: 200px;
+            border: 1px solid black;
+        }
+
+        .content form button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .content form button:hover {
+            background-color: #0056b3;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+    <script>
+        function showContent(page) {
+            // 隐藏所有内容
+            document.querySelectorAll(".content div").forEach(div => div.style.display = "none");
+            // 显示选中的内容
+            document.getElementById(page).style.display = "block";
+
+            // 更新导航按钮样式
+            document.querySelectorAll(".nav-bar a").forEach(link => {
+                link.classList.remove("active");
+            });
+            document.getElementById("nav-" + page).classList.add("active");
+        }
+
+        // 默认显示首页，或者提交后显示信息输出
+        window.onload = function() {
+            const hasNavData = /*[[${navData != null}]]*/ false;
+            console.log("hasNavData:", hasNavData);
+            if (hasNavData) {
+                showContent("output");
+            } else {
+                showContent("home");
+            }
+        };
+    </script>
+</head>
+<body>
+<div class="nav-bar">
+    <a id="nav-home" href="#" onclick="showContent('home'); return false;">网络首页</a>
+    <a id="nav-guide" href="#" onclick="showContent('guide'); return false;">网络导航</a>
+    <a id="nav-input" href="#" onclick="showContent('input'); return false;">信息输入</a>
+    <a id="nav-output" href="#" onclick="showContent('output'); return false;">信息输出</a>
+</div>
+
+<div class="content">
+    <div id="home" style="display: none;">
+        <p>欢迎访问网络首页！</p>
+    </div>
+    <div id="guide" style="display: none;">
+        <p>这里是网络导航页面</p>
+        <p>可以添加一些导航链接</p>
+    </div>
+    <div id="input" style="display: none;">
+        <form th:action="@{/experiment/4/login-test}" th:object="${loginForm}" method="post">
+            <div class="form-row">
+                <label for="username">用户名：</label>
+                <input type="text" id="username" th:field="*{username}" required>
+            </div>
+            <div class="form-row">
+                <label for="password">密码：</label>
+                <input type="password" id="password" th:field="*{password}" required>
+            </div>
+            <button type="submit">提交</button>
+        </form>
+    </div>
+    <div id="output" style="display: none;">
+        <div th:if="${navData != null}">
+            <p th:if="${navData.containsKey('error') and navData.error != null}" class="error" th:text="${navData.error}"></p>
+            <div th:if="${!navData.containsKey('error') or navData.error == null}">
+                <p th:text="${navData.message}"></p>
+                <p class="red">登陆成功！</p>
+            </div>
+        </div>
+        <div th:if="${navData == null}">
+            <p class="error">请先提交信息！</p>
+        </div>
+    </div>
+</div>
+
+<p class="error">备注：了解了前期的内容后，还有详情和近况</p>
+</body>
+</html>

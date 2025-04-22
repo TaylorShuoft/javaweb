@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>实验平台</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="container">
+    <!-- 侧边栏 -->
+    <nav class="sidebar">
+        <h2>实验导航</h2>
+        <ul>
+            <li th:each="experiment : ${experiments}">
+                <a th:href="@{/experiment/{id}(id=${experiment.id})}" th:text="${experiment.name}"></a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- 实验内容展示区 -->
+    <div class="content">
+        <h1>欢迎来到实验平台</h1>
+        <p>请选择左侧实验进行查看。</p>
+    </div>
+</div>
+</body>
+</html>

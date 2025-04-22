@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('/imgs/client.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>用户注册</h1>
+    <a th:href="@{/experiment/{id}(id=${experimentId})}">返回实验 3</a>
+
+    <form th:action="@{/experiment/3/register}" method="post">
+        <div>
+            <label for="name">姓名（必填）：</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+
+        <div>
+            <label for="password">密码（必填）：</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div>
+            <label for="phone">电话（11 位）：</label>
+            <input type="text" id="phone" name="phone" required>
+        </div>
+
+        <div>
+            <label for="className">班级：</label>
+            <input type="text" id="className" name="className">
+        </div>
+
+        <div>
+            <label>爱好：</label>
+            <div>
+                <input type="checkbox" name="hobbies" value="阅读"> 阅读
+                <input type="checkbox" name="hobbies" value="运动"> 运动
+                <input type="checkbox" name="hobbies" value="音乐"> 音乐
+            </div>
+        </div>
+
+        <button type="submit">提交</button>
+    </form>
+</div>
+</body>
+</html>

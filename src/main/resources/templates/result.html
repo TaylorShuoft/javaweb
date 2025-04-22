@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册结果</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('/imgs/res.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .register-info {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .register-info h2 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .register-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>注册结果</h1>
+    <a th:if="${experimentId != null}" th:href="@{/experiment/{id}(id=${experimentId})}">返回实验 3</a>
+    <a th:if="${experimentId == null}" href="/experiment/3">返回实验 3</a>
+
+    <div th:if="${userData != null}" class="register-info">
+        <h2>注册信息</h2>
+        <div th:if="${userData.containsKey('error') and userData.error != null}">
+            <p class="error" th:text="${userData.error}"></p>
+        </div>
+        <div th:if="${!userData.containsKey('error') or userData.error == null}">
+            <p>姓名：<span th:text="${userData.name}"></span></p>
+            <p>密码：<span th:text="${userData.password}"></span></p>
+            <p>电话：<span th:text="${userData.phone}"></span></p>
+            <p>班级：<span th:text="${userData.className}"></span></p>
+            <p>爱好：<span th:text="${userData.hobbies}"></span></p>
+        </div>
+    </div>
+    <div th:if="${userData == null}">
+        <p class="error">未收到注册数据，请重试！</p>
+    </div>
+</div>
+</body>
+</html>

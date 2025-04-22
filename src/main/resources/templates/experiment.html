@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${experimentTitle}"></title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <script>
+        function showQuestion(index) {
+            let contents = document.querySelectorAll(".question-content");
+            contents.forEach(c => c.style.display = "none");
+            document.getElementById("question-" + index).style.display = "block";
+
+            let navLinks = document.querySelectorAll(".example-nav a");
+            navLinks.forEach(link => link.classList.remove("active"));
+            navLinks[index].classList.add("active");
+
+            let demoContents = document.querySelectorAll(".demo-content");
+            demoContents.forEach(content => content.style.display = "none");
+            if (document.getElementById("demo-content-" + index)) {
+                document.getElementById("demo-content-" + index).style.display = "block";
+            }
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <nav class="sidebar">
+        <h2>实验导航</h2>
+        <ul class="sidebar-nav">
+            <li th:each="experiment : ${experiments}">
+                <a th:href="@{/experiment/{id}(id=${experiment.id})}" th:text="${experiment.name}"></a>
+            </li>
+        </ul>
+    </nav>
+
+    <main class="content">
+        <h1 th:text="${experimentTitle}"></h1>
+
+        <div class="question-list">
+            <h2>计科2203陈硕 20224221136</h2>
+            <h2>题目列表</h2>
+            <ul>
+                <li th:each="question, stat : ${questions}">
+                    <a th:href="@{/experiment/4/{endpoint}(endpoint=${question.endpoint})}"
+                       th:text="${question.title}"
+                       th:onclick="'showQuestion(' + ${stat.index} + '); return false;'"></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="question-display">
+            <div th:each="question, stat : ${questions}" th:id="'question-' + ${stat.index}" class="question-content" th:style="${stat.index == activeIndex} ? 'display: block' : 'display: none'">
+                <h3 th:text="${question.title}"></h3>
+                <p th:text="${question.description}"></p>
+
+                <div th:if="${experimentTitle == '实验 1：Java 基础'}">
+                    <div th:switch="${question.title}">
+                        <div th:case="'题目 1'">
+                            <pre th:text="${multiplicationTable}"></pre>
+                        </div>
+                        <div th:case="'题目 2'">
+                            <nav class="example-nav">
+                                <a href="#" th:onclick="'showQuestion(0); return false;'" th:class="${activeIndex == 0} ? 'active' : ''">首页</a>
+                                <a href="#" th:onclick="'showQuestion(1); return false;'" th:class="${activeIndex == 1} ? 'active' : ''">新闻</a>
+                                <a href="#" th:onclick="'showQuestion(2); return false;'" th:class="${activeIndex == 2} ? 'active' : ''">联系方式</a>
+                                <a href="#" th:onclick="'showQuestion(3); return false;'" th:class="${activeIndex == 3} ? 'active' : ''">关于我们</a>
+                            </nav>
+                            <div id="demo-content-0" class="demo-content" style="display: block;">
+                                <h4>首页内容</h4>
+                                <p>欢迎访问实验平台首页！这里是关于实验 1 的概述。</p>
+                            </div>
+                            <div id="demo-content-1" class="demo-content" style="display: none;">
+                                <h4>新闻内容</h4>
+                                <p>最新消息：实验 1 更新了乘法口诀表功能。</p>
+                            </div>
+                            <div id="demo-content-2" class="demo-content" style="display: none;">
+                                <h4>联系方式内容</h4>
+                                <p>联系我们：邮箱 example@email.com，电话 123-456-7890。</p>
+                            </div>
+                            <div id="demo-content-3" class="demo-content" style="display: none;">
+                                <h4>关于我们内容</h4>
+                                <p>本平台由 xAI 团队开发，致力于教育实验。</p>
+                            </div>
+                        </div>
+                        <div th:case="'题目 3'">
+                            <h4>学生成绩报告</h4>
+                            <p>总分满分是150分。</p>
+                            <table border="1" cellpadding="5" cellspacing="0">
+                                <thead>
+                                <tr>
+                                    <th>姓名</th>
+                                    <th>数学</th>
+                                    <th>语文</th>
+                                    <th>英语</th>
+                                    <th>总分</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="score : ${scoreReport}">
+                                    <td th:text="${score.name}"></td>
+                                    <td th:text="${score.math}"></td>
+                                    <td th:text="${score.chinese}"></td>
+                                    <td th:text="${score.english}"></td>
+                                    <td th:text="${score.total}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${experimentTitle == '实验 2：页面标记'}">
+                    <div th:switch="${question.description}">
+                        <div th:case="'超链接交换'">
+                            <p>点击以下链接查看学校图片：</p>
+                            <a href="https://www.wut.edu.cn/" target="_blank">武昌理工学院</a><br>
+                            <a href="https://www.whut.edu.cn/" target="_blank">武汉理工大学</a>
+                        </div>
+                        <div th:case="'成绩评判'">
+                            <p>随机生成的成绩：<span th:text="${randomScore}"></span></p>
+                            <p>评级结果：<span th:text="${grade}"></span></p>
+                        </div>
+                        <div th:case="'比较两数大小'">
+                            <p>随机数 1：<span th:text="${num1}"></span></p>
+                            <p>随机数 2：<span th:text="${num2}"></span></p>
+                            <p>比较结果：<span th:text="${comparison}"></span></p>
+                        </div>
+                        <div th:case="'消费综合统计'">
+                            <p>请输入包含数字的文本（例如：12.5 -3 45.67），计算所有数字的总和：</p>
+                            <form th:action="@{/experiment/{id}/calculatePriceSum(id=${experimentId})}" method="post">
+                                <label for="input">输入文本：</label>
+                                <input type="text" id="input" name="input" th:value="${input}" required>
+                                <button type="submit">计算总和</button>
+                            </form>
+                            <p th:if="${priceSum != null}">计算结果：<span th:text="${priceSum}"></span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${experimentTitle == '实验 3：内置对象'}">
+                    <div th:switch="${question.description}">
+                        <div th:case="'计算器'">
+                            <p>请输入两个数字和运算符，计算结果：</p>
+                            <form th:action="@{/experiment/{id}/calculate(id=${experimentId})}" method="post">
+                                <label for="num1">数字 1：</label>
+                                <input type="text" id="num1" name="num1" required>
+                                <label for="operator">运算符：</label>
+                                <select id="operator" name="operator" required>
+                                    <option value="+">+</option>
+                                    <option value="-">-</option>
+                                    <option value="*">×</option>
+                                    <option value="/">÷</option>
+                                </select>
+                                <label for="num2">数字 2：</label>
+                                <input type="text" id="num2" name="num2" required>
+                                <button type="submit">计算</button>
+                            </form>
+                            <div th:if="${calcData != null}">
+                                <p th:if="${calcData.containsKey('error') and calcData.error != null}" style="color: red;" th:text="${calcData.error}"></p>
+                                <p th:if="${calcData.containsKey('calcResult') and calcData.calcResult != null}">
+                                    结果：<span th:text="${calcData.num1} + ' ' + ${calcData.operator} + ' ' + ${calcData.num2} + ' = ' + ${calcData.calcResult}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div th:case="'注册表单'">
+                            <p>请填写用户注册信息：</p>
+                            <a th:href="@{/experiment/3/register}">前往注册页面</a>
+                        </div>
+                        <div th:case="'tag引用'">
+                            <p>请输入三角形三边长度，计算周长：</p>
+                            <form th:action="@{/experiment/{id}/calculatePerimeter(id=${experimentId})}" method="post">
+                                <label for="side1">边 1：</label>
+                                <input type="text" id="side1" name="side1" required>
+                                <label for="side2">边 2：</label>
+                                <input type="text" id="side2" name="side2" required>
+                                <label for="side3">边 3：</label>
+                                <input type="text" id="side3" name="side3" required>
+                                <button type="submit">计算周长</button>
+                            </form>
+                            <div th:if="${perimeterData != null}">
+                                <p th:if="${perimeterData.containsKey('error') and perimeterData.error != null}" style="color: red;" th:text="${perimeterData.error}"></p>
+                                <p th:if="${perimeterData.containsKey('perimeter') and perimeterData.perimeter != null}">
+                                    三边长度：<span th:text="${perimeterData.side1} + ', ' + ${perimeterData.side2} + ', ' + ${perimeterData.side3}"></span><br>
+                                    周长：<span th:text="${perimeterData.perimeter}"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div th:case="'模拟导航选页'">
+                            <p>请体验模拟导航选页功能：</p>
+                            <a th:href="@{/experiment/3/nav-test}">前往导航测试页面</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 为实验 4 添加内容 -->
+                <div th:if="${experimentTitle == '实验 4：JavaBean'}">
+                    <div th:switch="${question.title}">
+                        <div th:case="'题目 1'">
+                            <p>请体验 Java 登陆验证功能：</p>
+                            <a th:href="@{/experiment/4/login-test}">前往登陆验证页面</a>
+                        </div>
+                        <div th:case="'题目 2'">
+                            <p>请体验 Java 统计学生成绩功能：</p>
+                            <a th:href="@{/experiment/4/student-scores}">前往学生成绩统计页面</a>
+                        </div>
+                        <div th:case="'题目 3'">
+                            <p>请体验 Java 三角形判定功能：</p>
+                            <a th:href="@{/experiment/4/triangle-judgment}">前往三角形判定页面</a>
+                        </div>
+                        <div th:case="'题目 4'">
+                            <p>请体验 Java 留言板设计功能：</p>
+                            <a th:href="@{/experiment/4/message-board}">前往留言板设计页面</a>
+                        </div>
+                        <div th:case="'题目 5'">
+                            <p>请体验 Java 计算梯形面积功能：</p>
+                            <a th:href="@{/experiment/4/trapezoid-area}">前往计算梯形面积页面</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div th:if="${experimentTitle != '实验 1：Java 基础' and experimentTitle != '实验 2：页面标记' and experimentTitle != '实验 3：内置对象' and experimentTitle != '实验 4：JavaBean'}">
+                    <p>该实验暂无内容。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
