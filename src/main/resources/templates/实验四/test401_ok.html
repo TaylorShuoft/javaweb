@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>登录成功</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .success-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .success-container h2 {
+            color: green;
+        }
+        .success-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .success-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="success-container">
+    <h2>登录成功</h2>
+    <p>欢迎，<span th:text="${username}"></span>！</p>
+    <p><a th:href="@{/experiment/4/test401-login}">返回登录页面</a></p>
+</div>
+</body>
+</html>

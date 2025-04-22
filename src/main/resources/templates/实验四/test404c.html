@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>删除留言</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .delete-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .delete-container input[type="text"],
+        .delete-container input[type="password"] {
+            width: 100px;
+            padding: 5px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .delete-container button {
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .delete-container button:hover {
+            background-color: #c82333;
+        }
+        .delete-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .delete-container a:hover {
+            text-decoration: underline;
+        }
+        .delete-container .error {
+            color: red;
+        }
+        .delete-container .success {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="delete-container">
+    <h2>删除留言</h2>
+    <form th:action="@{/experiment/4/test404c}" method="post">
+        <label>留言ID：<input type="text" name="id" required></label><br>
+        <label>管理员密码：<input type="password" name="adminPassword" required></label><br>
+        <button type="submit">删除</button>
+    </form>
+    <div th:if="${result != null}">
+        <p th:if="${result.containsKey('error')}" class="error" th:text="${result.error}"></p>
+        <p th:if="${result.containsKey('message')}" class="success" th:text="${result.message}"></p>
+    </div>
+    <a th:href="@{/experiment/4/test404}">返回留言板</a>
+</div>
+</body>
+</html>

@@ -35,11 +35,11 @@ public class ExperimentConfig {
                 Map.of("title", "题目 4", "description", "模拟导航选页")
         ));
         QUESTIONS.put(4, Arrays.asList(
-                Map.of("title", "题目 1", "description", "Java 登陆验证", "endpoint", "login-test"),
-                Map.of("title", "题目 2", "description", "Java 统计学生成绩", "endpoint", "student-scores"),
-                Map.of("title", "题目 3", "description", "Java 三角形判定", "endpoint", "triangle-judgment"),
-                Map.of("title", "题目 4", "description", "Java 留言板设计", "endpoint", "message-board"),
-                Map.of("title", "题目 5", "description", "Java 计算梯形面积", "endpoint", "trapezoid-area")
+                Map.of("title", "题目 1", "description", "Java 登陆验证", "endpoint", "test401-login"),
+                Map.of("title", "题目 2", "description", "Java 统计学生成绩", "endpoint", "test402-grade"),
+                Map.of("title", "题目 3", "description", "Java 三角形判定", "endpoint", "test403-input"),
+                Map.of("title", "题目 4", "description", "Java 留言板设计", "endpoint", "test404"),
+                Map.of("title", "题目 5", "description", "Java 计算梯形面积", "endpoint", "test405a")
         ));
     }
 }

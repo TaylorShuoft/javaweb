@@ -1,14 +1,12 @@
 package com.example.javaweb.model;
 
-public class LoginForm {
+public class User {
     private String username;
     private String password;
 
-    // 构造函数
-    public LoginForm() {
+    public User() {
     }
 
-    // Getters 和 Setters
     public String getUsername() {
         return username;
     }

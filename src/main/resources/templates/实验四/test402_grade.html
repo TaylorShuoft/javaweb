@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学生成绩统计</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .grade-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .grade-container input[type="text"] {
+            width: 100px;
+            padding: 5px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .grade-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .grade-container button:hover {
+            background-color: #0056b3;
+        }
+        .grade-container table {
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .grade-container table, .grade-container th, .grade-container td {
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+        .grade-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .grade-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="grade-container">
+    <h2>学生成绩统计</h2>
+    <form th:action="@{/experiment/4/test402-grade}" th:object="${student}" method="post">
+        <label>数学成绩：<input type="text" th:field="*{math}" required></label><br>
+        <label>英语成绩：<input type="text" th:field="*{english}" required></label><br>
+        <label>计算机成绩：<input type="text" th:field="*{computer}" required></label><br>
+        <button type="submit">计算总分</button>
+    </form>
+    <div th:if="${result != null}">
+        <table>
+            <tr>
+                <th>数学</th>
+                <th>英语</th>
+                <th>计算机</th>
+                <th>总分</th>
+            </tr>
+            <tr>
+                <td th:text="${result.student.math}"></td>
+                <td th:text="${result.student.english}"></td>
+                <td th:text="${result.student.computer}"></td>
+                <td th:text="${result.student.total}"></td>
+            </tr>
+        </table>
+    </div>
+    <p><a th:href="@{/experiment/4}">返回实验列表</a></p>
+</div>
+</body>
+</html>

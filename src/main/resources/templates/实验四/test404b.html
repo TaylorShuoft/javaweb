@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>留言信息</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .message-list-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+        .message-list-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .message-list-container table, .message-list-container th, .message-list-container td {
+            border: 1px solid #ccc;
+            padding: 5px;
+        }
+        .message-list-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .message-list-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="message-list-container">
+    <h2>留言信息</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>留言内容</th>
+        </tr>
+        <tr th:each="message : ${messages}">
+            <td th:text="${message.id}"></td>
+            <td th:text="${message.username}"></td>
+            <td th:text="${message.content}"></td>
+        </tr>
+    </table>
+    <a th:href="@{/experiment/4/test404}">返回留言板</a>
+</div>
+</body>
+</html>

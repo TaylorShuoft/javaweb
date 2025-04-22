@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 200px;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .login-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="login-container">
+    <h2>用户登录</h2>
+    <form th:action="@{/experiment/4/test401-login}" th:object="${user}" method="post">
+        <label>用户名：<input type="text" th:field="*{username}" required></label><br>
+        <label>密码：<input type="password" th:field="*{password}" required></label><br>
+        <button type="submit">登录</button>
+    </form>
+    <div th:if="${result != null}">
+        <p th:if="${result.containsKey('error')}" class="error" th:text="${result.error}"></p>
+        <p th:if="${result.containsKey('message')}" class="success" th:text="${result.message}"></p>
+        <p th:if="${result.containsKey('message')}">
+            <a th:href="@{/experiment/4/test401-ok(username=${result.username})}">登录成功页面</a>
+        </p>
+        <p th:if="${result.containsKey('error')}">
+            <a th:href="@{/experiment/4/test401-error(username=${result.username})}">登录失败页面</a>
+        </p>
+    </div>
+    <p><a th:href="@{/experiment/4}">返回实验列表</a></p>
+</div>
+</body>
+</html>

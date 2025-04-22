@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>三角形判断</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .triangle-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .triangle-container input[type="text"] {
+            width: 100px;
+            padding: 5px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .triangle-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .triangle-container button:hover {
+            background-color: #0056b3;
+        }
+        .triangle-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .triangle-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="triangle-container">
+    <h2>三角形判断</h2>
+    <form th:action="@{/experiment/4/test403-input}" th:object="${triangle}" method="post">
+        <label>边长1：<input type="text" th:field="*{side1}" required></label><br>
+        <label>边长2：<input type="text" th:field="*{side2}" required></label><br>
+        <label>边长3：<input type="text" th:field="*{side3}" required></label><br>
+        <button type="submit">判断</button>
+    </form>
+    <div th:if="${result != null}">
+        <p>边长：<span th:text="${result.triangle.side1}"></span>,
+            <span th:text="${result.triangle.side2}"></span>,
+            <span th:text="${result.triangle.side3}"></span></p>
+        <p>是否构成三角形：<span th:class="${result.triangle.isTriangle} ? 'true' : 'false'"
+                                th:text="${result.triangle.isTriangle} ? 'true' : 'false'"></span></p>
+        <p th:if="${result.triangle.isTriangle}">周长：<span th:text="${result.triangle.perimeter}"></span></p>
+    </div>
+    <p><a th:href="@{/experiment/4}">返回实验列表</a></p>
+</div>
+<style>
+    .true { color: green; }
+    .false { color: red; }
+</style>
+</body>
+</html>

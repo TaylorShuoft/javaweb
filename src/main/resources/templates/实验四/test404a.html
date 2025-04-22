@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>留言提交成功</title>
+    <link rel="stylesheet" th:href="@{/styles.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .success-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .success-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .success-container a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<div class="success-container">
+    <h2>留言提交成功</h2>
+    <p>用户名：<span th:text="${result.message.username}"></span></p>
+    <p>留言内容：<span th:text="${result.message.content}"></span></p>
+    <a th:href="@{/experiment/4/test404}">返回留言板</a>
+</div>
+</body>
+</html>

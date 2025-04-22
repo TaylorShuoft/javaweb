@@ -1,32 +1,35 @@
 package com.example.javaweb.service;
 
-
-
-import com.example.javaweb.model.LoginForm;
+import com.example.javaweb.model.User;
+import com.example.javaweb.model.Student;
+import com.example.javaweb.model.Triangle;
+import com.example.javaweb.model.Message;
+import com.example.javaweb.model.Compute;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class Experiment4Service {
 
-    // 模拟一个用户数据库，实际项目中应使用数据库
     private static final Map<String, String> USER_DATABASE = new HashMap<>();
+    private static List<Message> messages = new ArrayList<>();
+    private static int idCounter = 1;
 
     static {
-        USER_DATABASE.put("admin", "123456"); // 用户名: admin, 密码: 123456
-        USER_DATABASE.put("user", "password"); // 用户名: user, 密码: password
+        USER_DATABASE.put("zhangsan", "2021001");
     }
 
-    // 题目 1：Java 登陆验证
-    public Map<String, Object> processLogin(LoginForm loginForm) {
+    // 案例 1：用户登录验证
+    public Map<String, Object> processLogin(User user) {
         Map<String, Object> result = new HashMap<>();
 
-        String username = loginForm.getUsername();
-        String password = loginForm.getPassword();
+        String username = user.getUsername();
+        String password = user.getPassword();
 
-        // 验证用户名和密码是否为空
         if (username == null || username.trim().isEmpty()) {
             result.put("error", "用户名不能为空！");
             return result;
@@ -36,7 +39,6 @@ public class Experiment4Service {
             return result;
         }
 
-        // 验证用户名和密码是否匹配
         if (!USER_DATABASE.containsKey(username)) {
             result.put("error", "用户名不存在！");
             return result;
@@ -46,29 +48,60 @@ public class Experiment4Service {
             return result;
         }
 
-        // 验证通过
         result.put("username", username);
         result.put("message", "欢迎，" + username + "！");
         return result;
     }
 
-    // 题目 2：Java 统计学生成绩（空方法）
-    public Map<String, Object> processStudentScores() {
-        return new HashMap<>();
+    // 案例 2：统计学生成绩
+    public Map<String, Object> processStudentScores(Student student) {
+        student.calculateTotal();
+        Map<String, Object> result = new HashMap<>();
+        result.put("student", student);
+        return result;
     }
 
-    // 题目 3：Java 三角形判定（空方法）
-    public Map<String, Object> processTriangleJudgment() {
-        return new HashMap<>();
+    // 案例 3：三角形判断
+    public Map<String, Object> processTriangleJudgment(Triangle triangle) {
+        triangle.checkTriangle();
+        Map<String, Object> result = new HashMap<>();
+        result.put("triangle", triangle);
+        return result;
     }
 
-    // 题目 4：Java 留言板设计（空方法）
-    public Map<String, Object> processMessageBoard() {
-        return new HashMap<>();
+    // 案例 4：留言板
+    public Map<String, Object> processMessageBoard(Message message) {
+        message.setId(idCounter++);
+        messages.add(message);
+        Map<String, Object> result = new HashMap<>();
+        result.put("message", message);
+        return result;
     }
 
-    // 题目 5：Java 计算梯形面积（空方法）
-    public Map<String, Object> processTrapezoidArea() {
-        return new HashMap<>();
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public Map<String, Object> deleteMessage(int id, String adminPassword) {
+        Map<String, Object> result = new HashMap<>();
+        if (!"admin123".equals(adminPassword)) {
+            result.put("error", "管理员密码错误！");
+            return result;
+        }
+        boolean deleted = messages.removeIf(msg -> msg.getId() == id);
+        if (deleted) {
+            result.put("message", "删除成功！");
+        } else {
+            result.put("error", "留言ID不存在！");
+        }
+        return result;
+    }
+
+    // 案例 5：计算梯形面积
+    public Map<String, Object> processTrapezoidArea(Compute compute) {
+        compute.calculateArea();
+        Map<String, Object> result = new HashMap<>();
+        result.put("compute", compute);
+        return result;
     }
 }

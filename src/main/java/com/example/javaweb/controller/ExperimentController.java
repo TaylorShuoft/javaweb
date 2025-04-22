@@ -1,7 +1,11 @@
 package com.example.javaweb.controller;
 
 import com.example.javaweb.config.ExperimentConfig;
-import com.example.javaweb.model.LoginForm;
+import com.example.javaweb.model.User;
+import com.example.javaweb.model.Student;
+import com.example.javaweb.model.Triangle;
+import com.example.javaweb.model.Message;
+import com.example.javaweb.model.Compute;
 import com.example.javaweb.service.Experiment1Service;
 import com.example.javaweb.service.Experiment2Service;
 import com.example.javaweb.service.Experiment3Service;
@@ -195,71 +199,109 @@ public class ExperimentController {
         return "nav_test";
     }
 
-    // 实验 4：JavaBean - 题目 1：Java 登陆验证
-    @GetMapping("/experiment/4/login-test")
-    public String showLoginTest(Model model) {
-        model.addAttribute("loginForm", new LoginForm());
-        model.addAttribute("experimentId", 4);
-        return "实验四/login_test"; // 修改为新路径
+    // 实验 4：JavaBean - 案例 1：用户登录验证
+    @GetMapping("/experiment/4/test401-login")
+    public String showTest401Login(Model model) {
+        model.addAttribute("user", new User());
+        return "实验四/test401_login";
     }
 
-    @PostMapping("/experiment/4/login-test")
-    public String processLoginTest(@ModelAttribute("loginForm") LoginForm loginForm, Model model) {
-        Map<String, Object> result = experiment4Service.processLogin(loginForm);
-        model.addAttribute("navData", result);
-        model.addAttribute("experimentId", 4);
-        return "实验四/login_test"; // 修改为新路径
+    @PostMapping("/experiment/4/test401-login")
+    public String processTest401Login(@ModelAttribute("user") User user, Model model) {
+        Map<String, Object> result = experiment4Service.processLogin(user);
+        model.addAttribute("result", result);
+        model.addAttribute("user", user);
+        return "实验四/test401_login";
     }
 
-    // 实验 4：JavaBean - 题目 2：Java 统计学生成绩（空方法）
-    @GetMapping("/experiment/4/student-scores")
-    public String showStudentScores(Model model) {
-        model.addAttribute("experimentId", 4);
-        return "实验四/student_scores"; // 修改为新路径
+    @GetMapping("/experiment/4/test401-ok")
+    public String showTest401Ok(@RequestParam("username") String username, Model model) {
+        model.addAttribute("username", username);
+        return "实验四/test401_ok";
     }
 
-    @PostMapping("/experiment/4/student-scores")
-    public String processStudentScores(Model model) {
-        model.addAttribute("experimentId", 4);
-        return "实验四/student_scores"; // 修改为新路径
+    @GetMapping("/experiment/4/test401-error")
+    public String showTest401Error(@RequestParam("username") String username, Model model) {
+        model.addAttribute("username", username);
+        return "实验四/test401_error";
     }
 
-    // 实验 4：JavaBean - 题目 3：Java 三角形判定（空方法）
-    @GetMapping("/experiment/4/triangle-judgment")
-    public String showTriangleJudgment(Model model) {
-        model.addAttribute("experimentId", 4);
-        return "实验四/triangle_judgment"; // 修改为新路径
+    // 实验 4：JavaBean - 案例 2：统计学生成绩
+    @GetMapping("/experiment/4/test402-grade")
+    public String showTest402Grade(Model model) {
+        model.addAttribute("student", new Student());
+        return "实验四/test402_grade";
     }
 
-    @PostMapping("/experiment/4/triangle-judgment")
-    public String processTriangleJudgment(Model model) {
-        model.addAttribute("experimentId", 4);
-        return "实验四/triangle_judgment"; // 修改为新路径
+    @PostMapping("/experiment/4/test402-grade")
+    public String processTest402Grade(@ModelAttribute("student") Student student, Model model) {
+        Map<String, Object> result = experiment4Service.processStudentScores(student);
+        model.addAttribute("result", result);
+        model.addAttribute("student", student);
+        return "实验四/test402_grade";
     }
 
-    // 实验 4：JavaBean - 题目 4：Java 留言板设计（空方法）
-    @GetMapping("/experiment/4/message-board")
-    public String showMessageBoard(Model model) {
-        model.addAttribute("experimentId", 4);
-        return "实验四/message_board"; // 修改为新路径
+    // 实验 4：JavaBean - 案例 3：三角形判断
+    @GetMapping("/experiment/4/test403-input")
+    public String showTest403Input(Model model) {
+        model.addAttribute("triangle", new Triangle());
+        return "实验四/test403_input";
     }
 
-    @PostMapping("/experiment/4/message-board")
-    public String processMessageBoard(Model model) {
-        model.addAttribute("experimentId", 4);
-        return "实验四/message_board"; // 修改为新路径
+    @PostMapping("/experiment/4/test403-input")
+    public String processTest403Input(@ModelAttribute("triangle") Triangle triangle, Model model) {
+        Map<String, Object> result = experiment4Service.processTriangleJudgment(triangle);
+        model.addAttribute("result", result);
+        model.addAttribute("triangle", triangle);
+        return "实验四/test403_input";
     }
 
-    // 实验 4：JavaBean - 题目 5：Java 计算梯形面积（空方法）
-    @GetMapping("/experiment/4/trapezoid-area")
-    public String showTrapezoidArea(Model model) {
-        model.addAttribute("experimentId", 4);
-        return "实验四/trapezoid_area"; // 修改为新路径
+    // 实验 4：JavaBean - 案例 4：留言板
+    @GetMapping("/experiment/4/test404")
+    public String showTest404(Model model) {
+        model.addAttribute("message", new Message());
+        return "实验四/test404";
     }
 
-    @PostMapping("/experiment/4/trapezoid-area")
-    public String processTrapezoidArea(Model model) {
-        model.addAttribute("experimentId", 4);
-        return "实验四/trapezoid_area"; // 修改为新路径
+    @PostMapping("/experiment/4/test404")
+    public String processTest404(@ModelAttribute("message") Message message, Model model) {
+        Map<String, Object> result = experiment4Service.processMessageBoard(message);
+        model.addAttribute("result", result);
+        return "实验四/test404a";
+    }
+
+    @GetMapping("/experiment/4/test404b")
+    public String showTest404b(Model model) {
+        model.addAttribute("messages", experiment4Service.getMessages());
+        return "实验四/test404b";
+    }
+
+    @GetMapping("/experiment/4/test404c")
+    public String showTest404c(Model model) {
+        return "实验四/test404c";
+    }
+
+    @PostMapping("/experiment/4/test404c")
+    public String processTest404c(@RequestParam("id") int id,
+                                  @RequestParam("adminPassword") String adminPassword,
+                                  Model model) {
+        Map<String, Object> result = experiment4Service.deleteMessage(id, adminPassword);
+        model.addAttribute("result", result);
+        return "实验四/test404c";
+    }
+
+    // 实验 4：JavaBean - 案例 5：计算梯形面积
+    @GetMapping("/experiment/4/test405a")
+    public String showTest405a(Model model) {
+        model.addAttribute("compute", new Compute());
+        return "实验四/test405a";
+    }
+
+    @PostMapping("/experiment/4/test405a")
+    public String processTest405a(@ModelAttribute("compute") Compute compute, Model model) {
+        Map<String, Object> result = experiment4Service.processTrapezoidArea(compute);
+        model.addAttribute("result", result);
+        model.addAttribute("compute", compute);
+        return "实验四/test405a";
     }
 }
